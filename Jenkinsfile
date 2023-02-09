@@ -48,7 +48,7 @@ pipeline {
           stage('Perform Docker Build') {
                              steps {
                                  
-                                  docker build . -t 1.0.0
+                                  docker build . -t 2.0.0
                                  
                                  }
                              }
