@@ -56,7 +56,13 @@ pipeline {
                                     dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                                 }
                             }
-                  
+        
+            stage ('Send Mail') {
+                                steps {
+                                    emailext attachLog: true, body: '', compressLog: true, 
+                                        subject: 'Pipeline started', to: 'dummy@gmail.com, no-reply@gmail.com'
+                                }
+                            }
         }
     }
 }
