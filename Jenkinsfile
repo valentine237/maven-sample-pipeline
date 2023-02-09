@@ -44,6 +44,15 @@ pipeline {
                                  }
                              }
                   }
+        
+          stage('Perform Docker Build') {
+                             steps {
+                                 
+                                  docker build . -t 1.0.0
+                                 
+                                 }
+                             }
+                  }
 
            stage ('OWASP Dependency-Check Vulnerabilities') {
                                 steps {
