@@ -20,11 +20,11 @@ pipeline {
 
           stage('Sonarqube scan') {
                     environment {
-                                   scannerHome = tool 'ibt-sonarqube';
+                                   scannerHome = tool '<sonarURL>';
                                }
                               steps {
                                   sh 'echo performing sonar scans'
-                                  withSonarQubeEnv(credentialsId: 'SQ-student', installationName: 'IBT sonarqube') {
+                                  withSonarQubeEnv(credentialsId: 'sonarID', installationName: 'sonarqube') {
                                       sh "${scannerHome}/bin/sonar-scanner"
                                   }
                               }
@@ -56,17 +56,6 @@ pipeline {
                                     dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                                 }
                             }
-              stage ('Deploy code to non-prod') {
-                steps {
-                    script {
-                           def remote = [name: 'IBT-dev', host: '165.227.37.72', user: 'root', allowAnyHosts: true]
-                           withCredentials([usernamePassword(credentialsId: "ssh-vm-uname-pwd", usernameVariable: 'USERNAME',passwordVariable: 'PASSWORD')]) {
-                           remote.password = PASSWORD
-                           sshPut remote: remote, from: 'target/hello-maven-2.0.0-SNAPSHOT.jar', into: '/opt/tomcat/webapps/'
-                         }
-                }
-            }
-
                   
         }
     }
